@@ -30,10 +30,42 @@ def recommend(movie):
     return recommended_movie_names,recommended_movie_posters
 
 
-st.header('Movie Recommender System Using Machine Learning')
-movies = pickle.load(open('artifacts/movie_list.pkl','rb'))
-similarity = pickle.load(open('artifacts/similarity.pkl','rb'))
+import streamlit as st
+import pickle
+import requests
 
+# Streamlit Title
+st.header('Movie Recommender System Using Machine Learning')
+
+# GitHub Releases URLs
+movie_list_url = "https://github.com/Programmer-kush/Movie-recomdation-system/releases/download/v1.0/movie_list.pkl"
+similarity_url = "https://github.com/Programmer-kush/Movie-recomdation-system/releases/download/v1.0/similarity.pkl"
+
+# Local filenames
+movie_list_file = "movie_list.pkl"
+similarity_file = "similarity.pkl"
+
+# Function to download files
+def download_file(url, filename):
+    response = requests.get(url, stream=True)
+    if response.status_code == 200:
+        with open(filename, "wb") as file:
+            for chunk in response.iter_content(chunk_size=1024):
+                file.write(chunk)
+    else:
+        st.error(f"Failed to download {filename}. Check the URL or network connection.")
+
+# Download and save the files
+download_file(movie_list_url, movie_list_file)
+download_file(similarity_url, similarity_file)
+
+# Load Pickle Files
+try:
+    movies = pickle.load(open(movie_list_file, 'rb'))
+    similarity = pickle.load(open(similarity_file, 'rb'))
+    st.write("Files loaded successfully!")
+except Exception as e:
+    st.error(f"Error loading pickle files: {e}")
 movie_list = movies['title'].values
 selected_movie = st.selectbox(
     "Type or select a movie from the dropdown",
