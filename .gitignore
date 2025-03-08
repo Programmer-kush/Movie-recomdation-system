@@ -1,4 +1,5 @@
-artifacts\movie_list.pkl
-artifacts\similarity.pkl
-movie_list.pkl
-similarity.pkl
+# artifacts\movie_list.pkl
+# artifacts\similarity.pkl
+# movie_list.pkl
+# similarity.pkl
+artifacts/similarity.pkl
