@@ -123,6 +123,6 @@ streamlit run app.py
 
 
 ```bash
-Author: Kush
+Author:Kush
 
 ```
